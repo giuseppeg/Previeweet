@@ -1,0 +1,5 @@
+.previeweet { min-height:70px !important }
+.previeweet .stream-item-header ul.actions, .previeweet .stream-item-header small.time { right: 90px }
+.previeweet .js-tweet-text { margin-right:80px }
+.previeweet .previeweetContainer { width:70px; height:70px; overflow:hidden; position:absolute; right:9px; top:9px; }
+.previeweet .previeweetContainer img { max-width:100% }

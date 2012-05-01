@@ -1,0 +1,16 @@
+{ "name": "Previeweet",
+ "description": "Previeweet is a plugin for twitter which adds intweet image previews for the most popular image hosting services - Giuseppe Gurgone",
+ "icons": {
+     "16": "icon-16.png",
+     "48": "icon-48.png",
+     "128": "icon-128.png" },
+ "content_scripts": [
+    {
+      "matches": ["http://twitter.com/*", "https://twitter.com/*"],
+      "css": ["previeweet.css"],
+      "js": ["previeweet.js"],
+      "run_at": "document_idle"
+    }
+  ],
+ "version": "1.0"
+}
