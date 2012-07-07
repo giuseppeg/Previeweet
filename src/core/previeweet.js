@@ -1,3 +1,10 @@
+// Copyright (c) 2012 by Giuseppe Gurgone
+//
+// This work is licensed for reuse under the MIT license.
+// See the included LICENSE file for details.
+//
+// https://github.com/giuseppg/Previeweet/LICENSE
+
 (function ($, using, twttr) {
 
     "use strict";
