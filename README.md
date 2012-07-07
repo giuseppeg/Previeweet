@@ -1,15 +1,13 @@
-Previeweet
-==========
+# Previeweet
 
 Previeweet is browser extension which provides Twitter users with small image previews to the right of tweets.
 
-HOWTO use it
-------------
+## HOWTO use it
+
 
 Download the Chrome-extension: http://previeweet.com
 
-Supported Services
-------------------
+## Supported Services
 
 * Photobucket (pic.twitter.com)
 * Instagram
@@ -18,8 +16,7 @@ Supported Services
 * Imgur
 * Lockerz
 
-License (MIT)
--------------
+## License (MIT)
 
 Copyright (c) 2012 Giuseppe Gurgone
 
