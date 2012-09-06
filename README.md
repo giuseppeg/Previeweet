@@ -2,6 +2,13 @@
 
 Previeweet is browser extension which provides Twitter users with small image previews to the right of tweets.
 
+## Warning
+
+The plugin's codebase is old and bad. Meanwhile Twitter has introduced a new JS framework for its profiles and other pages.
+At the moment Previeweet works only for the homepage/mainstream/timeline/whateveryoucall it.
+
+I am planning to rewrite it from scratch somewhere in the future. I am studing a beautified version of the Twitter's profiles.js. Due to the minification it is an hard job. So if someone would like to contribute/help, please do it!
+
 ## HOWTO use it
 
 
