@@ -1,2 +1,1 @@
-(function(){var bohdy=document.getElementsByTagName('body')[0],script=document.createElement('script');script.src=chrome.extension.getURL('previeweetCore.js');bohdy.appendChild(script);})()
-
+(function(){var h=document.getElementsByTagName('head')[0],script=document.createElement('script');script.src=chrome.extension.getURL('previeweetCore.js');h.appendChild(script);})()
