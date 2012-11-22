@@ -22,6 +22,10 @@ Download the Chrome-extension: http://previeweet.com
 
 and many more!
 
+## Author
+
+[@giuseppegurgone](http://twitter.com/giuseppegurgone)
+
 ## License (MIT)
 
 Copyright (c) 2012 Giuseppe Gurgone
