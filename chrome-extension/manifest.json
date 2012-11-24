@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Previeweet",
-    "description": "Previeweet is an awesome browser extension that provides Twitter users with small image previews to the right of tweets - Giuseppe Gurgone",
+    "description": "Previeweet is an awesome browser extension that provides Twitter users with small image previews to the right of tweets",
     "icons": {
         "16": "icon-16.png",
         "48": "icon-48.png",
@@ -17,5 +17,5 @@
         "previeweetCore.js",
         "previeweet.css"
     ],
-    "version": "2.0.1"
+    "version": "2.0.2"
 }
