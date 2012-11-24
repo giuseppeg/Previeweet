@@ -302,7 +302,8 @@
                                 media;
 
                             if (!data || !data.entities || !data.entities.media) {
-                                return callback();
+                                callback();
+                                return;
                             }
 
                             for (i = 0; data.entities.media[i]; i += 1) {
@@ -367,7 +368,7 @@
                     if (!tiny && standard) {
                         this.slug = standard[1];
                     } else {
-                        return callback();
+                        callback();
                     }
 
                     this.data.src = twttr.util.supplant(this.constructor.template, {
@@ -546,7 +547,8 @@
                         success: function (data) {
 
                             if (data.stat === "fail") {
-                                return callback();
+                                callback();
+                                return;
                             }
 
                             var user_id = data.user.id;
@@ -785,7 +787,8 @@
                         picture_id = this.slug.match(/\w+\/(\w+)/);
 
                         if (!picture_id) {
-                            return callback();
+                            callback();
+                            return;
                         }
 
                         picture_id = picture_id[1];
@@ -899,7 +902,8 @@
 
                     twttr.getImageURL(this.constructor.template, {
                         domain: this.domain,
-                        media_id: this.slug
+                        media_id: this.slug,
+                        size: that.constructor.size
                     }, callback);
                 }
             }).statics({
@@ -1078,7 +1082,8 @@
 
                                     if (result.trackIds && result.trackIds.length > 0) {
                                         that.url = "itunes.apple.com/imix/id" + result.trackIds[0];
-                                        return that.process(callback);
+                                        that.process(callback);
+                                        return;
                                     }
 
                                     if (result.artworkUrl60) {
@@ -1086,7 +1091,8 @@
                                     } else if (result.artworkUrl100) {
                                         that.data.src = result.artworkUrl100;
                                     } else {
-                                        return callback();
+                                        callback();
+                                        return;
                                     }
                                 }
 
@@ -1362,7 +1368,8 @@
                     }
 
                     if (!media.url) {
-                        return callback(false, elem);
+                        callback(false, elem);
+                        return;
                     }
 
                     matchedUrlData = this.matchUrl(media.url);
