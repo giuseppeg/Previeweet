@@ -7,7 +7,7 @@
 
 (function () {
 
-    'use strict';
+    "use strict";
 
     // Url Resolver Module
     define("previeweet/url_resolver", ["module"], function (m) {
@@ -119,16 +119,11 @@
                 },
                 getImageURL: function (template, data, callback) {
                     if (!template || !data || !callback) {
-                        return;
+                        throw new Error("you must specify a template, a data object and a callback");
                     }
 
                     var imgSrc = this.util.supplant(template, data);
-
-                    if (imgSrc) {
-                        callback(imgSrc);
-                    }
-
-                    callback(null);
+                    callback(imgSrc);
                 },
                 util: {
                     bind: function (context, fn, args) {
@@ -180,13 +175,13 @@
                             item,
                             key;
 
-                        if (!strict) {
+                        if (typeof strict === "undefined") {
                             strict = true;
                         }
 
                         for (i = 0; m[i]; i += 1) {
                             item = m[i];
-                            key = item.replace(/\{|\}/g, '');
+                            key = item.replace(/\{|\}/g, "");
                             if (data[key]) {
                                 resolved = resolved.replace(item, data[key]);
                             } else {
@@ -227,9 +222,9 @@
                                 }
 
                                 callback(thumbnail);
+                            } else {
+                                callback(null);
                             }
-
-                            callback(null);
                         }
                     });
                 }
@@ -287,9 +282,9 @@
                     this.process(function () {
                         if (that.data && that.data.src) {
                             callback(that.data.src);
+                        } else {
+                            callback(null);
                         }
-
-                        callback(null);
                     });
                 },
                 process: function (callback) {
@@ -307,7 +302,7 @@
                                 media;
 
                             if (!data || !data.entities || !data.entities.media) {
-                                callback();
+                                return callback();
                             }
 
                             for (i = 0; data.entities.media[i]; i += 1) {
@@ -372,7 +367,7 @@
                     if (!tiny && standard) {
                         this.slug = standard[1];
                     } else {
-                        callback();
+                        return callback();
                     }
 
                     this.data.src = twttr.util.supplant(this.constructor.template, {
@@ -457,9 +452,9 @@
                         that.createImgSrc(function (img) {
                             if (img) {
                                 callback(img);
+                            } else {
+                                callback(null);
                             }
-
-                            callback(null);
                         });
                     });
                 },
@@ -551,7 +546,7 @@
                         success: function (data) {
 
                             if (data.stat === "fail") {
-                                callback();
+                                return callback();
                             }
 
                             var user_id = data.user.id;
@@ -649,9 +644,9 @@
                             secret: photo.secret,
                             size: "_s"
                         }));
+                    } else {
+                        callback(null);
                     }
-
-                    callback(null);
                 }
             });
 
@@ -790,8 +785,7 @@
                         picture_id = this.slug.match(/\w+\/(\w+)/);
 
                         if (!picture_id) {
-                            callback();
-                            return;
+                            return callback();
                         }
 
                         picture_id = picture_id[1];
@@ -1084,7 +1078,7 @@
 
                                     if (result.trackIds && result.trackIds.length > 0) {
                                         that.url = "itunes.apple.com/imix/id" + result.trackIds[0];
-                                        that.process(callback);
+                                        return that.process(callback);
                                     }
 
                                     if (result.artworkUrl60) {
@@ -1092,7 +1086,7 @@
                                     } else if (result.artworkUrl100) {
                                         that.data.src = result.artworkUrl100;
                                     } else {
-                                        callback();
+                                        return callback();
                                     }
                                 }
 
@@ -1171,9 +1165,9 @@
                             slug: RegExp.lastParen
                         }, callback);
 
+                    } else {
+                        callback(null);
                     }
-
-                    callback(null);
                 }
             }).statics({
                 template: "{{domain}}/{{slug}}b.jpg"
@@ -1261,9 +1255,9 @@
                             size: that.constructor.size
                         }, callback);
 
+                    } else {
+                        callback(null);
                     }
-
-                    callback(null);
                 }
             }).statics({
                 template: "//d1au12fyca1yp1.cloudfront.net/{{id}}/{{id}}_{{size}}lt.jpg",
@@ -1356,7 +1350,7 @@
                         tiny,
                         goodGuy;
 
-                    url = elem.attr('data-resolved-tinyurl');
+                    url = elem.attr("data-resolved-tinyurl");
 
                     if (url) {
                         media = {
@@ -1364,7 +1358,7 @@
                             url: url
                         };
                     } else {
-                        media.url = elem.attr('data-expanded-url') || elem.text();
+                        media.url = elem.attr("data-expanded-url") || elem.text();
                     }
 
                     if (!media.url) {
@@ -1377,7 +1371,7 @@
                         if (matchedUrlData.isTinyUrl) {
                             elem.on("previeweetWantsLinkResolution", function (e, data) {
                                 if (data && data.url) {
-                                    elem.attr('data-resolved-tinyurl', data.url);
+                                    elem.attr("data-resolved-tinyurl", data.url);
                                     that.resolveMedia(elem, callback);
                                 }
                             });
@@ -1390,7 +1384,7 @@
                         // if it is processing a resolvedUrl
                         // it replaces the tinyUrl data with the resolvedUrl ones
                         if (media.resolved) {
-                            tiny = elem.attr('data-expanded-url');
+                            tiny = elem.attr("data-expanded-url");
 
                             if (tiny) {
                                 this.alreadyMatched[tiny] = this.alreadyMatched[media.url];
@@ -1410,14 +1404,16 @@
                                     elem.data("previeweet-service", goodGuy._name);
 
                                     callback(true, elem);
+                                } else {
+                                    callback(false, elem);
                                 }
-
-                                callback(false, elem);
                             });
+                        } else {
+                            callback(false, elem);
                         }
+                    } else {
+                        callback(false, elem);
                     }
-
-                    callback(false, elem);
                 };
 
                 this.resolveThumbUrl = function (elem) {
@@ -1435,13 +1431,13 @@
 
                 this.loadThumb = function (elem) {
                     var that = this,
-                        img = $('<img/>');
+                        img = $("<img/>");
 
-                    img.on('load', function () {
+                    img.on("load", function () {
                         that.thumbSucceeded(elem, img);
-                    }).on('error', function () {
+                    }).on("error", function () {
                         that.thumbFailed(elem);
-                    }).attr('src', elem.attr("data-previeweet"));
+                    }).attr("src", elem.attr("data-previeweet"));
 
                 };
 
