@@ -28,6 +28,12 @@
 	vertical-align: top;
 }
 
+[data-with-previeweet] .previeweet iframe {
+	border: 0;
+	overflow: hidden;
+	background: transparent;
+}
+
 [data-with-previeweet] .previeweet a {
 	display: block;
 	width: 16px;
