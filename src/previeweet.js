@@ -68,7 +68,7 @@
 
     // Twitter's Phoenix Shim, customized.
     // I also think that Twitter will kill this at some point. It is a Shim anyway :)
-    define("previeweet/phx", ["module"], function (m) {
+    define("previeweet/phx", ["module", "core/parameterize"], function (m, parameterize) {
 
         var mediaTypes = {},
             matchers = [],
@@ -168,29 +168,14 @@
 
                         return params;
                     },
-                    supplant: function (template, data, strict) {
-                        var resolved = template,
-                            m = template.match(/\{\{([^\}]+)\}\}/g),
-                            i,
-                            item,
-                            key;
+                    supplant: function (template, data) {
+                        var result;
 
-                        if (typeof strict === "undefined") {
-                            strict = true;
-                        }
+                        try {
+                            result = parameterize(template, data, true);
+                        } catch(e) {};
 
-                        for (i = 0; m[i]; i += 1) {
-                            item = m[i];
-                            key = item.replace(/\{|\}/g, "");
-                            if (data[key]) {
-                                resolved = resolved.replace(item, data[key]);
-                            } else {
-                                if (strict) {
-                                    return false;
-                                }
-                            }
-                        }
-                        return resolved;
+                        return result;
                     }
                 }
             },
@@ -421,6 +406,8 @@
                                 callback();
                             }
                         });
+                    } else {
+                        callback();
                     }
                 }
             }).statics({
@@ -1438,14 +1425,25 @@
 
                 this.loadThumb = function (elem) {
                     var that = this,
-                        img = $("<img/>");
+                        img = $("<img/>"),
+                        src = elem.attr("data-previeweet");
+
+                    // Instagram workaround
+                    // http://referrer-killer.googlecode.com/git/example.html
+                    if (elem.data("previeweet-service") === "Instagram") {
+                        img = $('<iframe/>', {
+                            src: "javascript:'<!doctype html><html><head><meta charset=\\'utf-8\\'><style>*{margin:0;padding:0;border:0;}body{width:70px;}a{display:block}img{max-width: 100%;}</style></head><body>'+decodeURIComponent('"+encodeURIComponent('<a href="'+elem.attr("data-expanded-url")+'" target="_blank"><img src="'+src+'"></a>')+"')+'</body></html>'"
+                        });
+
+                        this.thumbSucceeded(elem, img);
+                        return;
+                    }
 
                     img.on("load", function () {
                         that.thumbSucceeded(elem, img);
                     }).on("error", function () {
                         that.thumbFailed(elem);
-                    }).attr("src", elem.attr("data-previeweet"));
-
+                    }).attr("src", src);
                 };
 
                 this.thumbSucceeded = function (elem, img) {
