@@ -13,7 +13,7 @@ Previeweet is an awesome browser extension that provides Twitter users with smal
 ## HOWTO use it
 
 
-Download the Chrome-extension: http://previeweet.com
+Download the Chrome-extension: https://chrome.google.com/webstore/detail/previeweet/ioknjbncflfoefodkjodmddcpahnhkgh
 
 ## Supported Services
 
@@ -37,7 +37,7 @@ and many more!
 
 ## License (MIT)
 
-Copyright (c) 2012 Giuseppe Gurgone
+Copyright (c) 2013 Giuseppe Gurgone
 
 This work is licensed for reuse under the MIT license.
 See the included [LICENSE] (LICENSE) file for details.
