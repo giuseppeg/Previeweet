@@ -34,7 +34,7 @@
 	background: transparent;
 }
 
-[data-with-previeweet] .previeweet a {
+[data-with-previeweet] .previeweet a[href^="//twitter.com"] {
 	display: block;
 	width: 16px;
 	height: 16px;
@@ -44,7 +44,7 @@
 	bottom: 2px;
 }
 
-[data-with-previeweet] .previeweet a img {
+[data-with-previeweet] .previeweet a[href^="//twitter.com"] img {
 	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
 
@@ -55,7 +55,10 @@
 	background: rgba(255, 255, 255, 0.9);
 }
 
-[data-with-previeweet] .previeweet a[href="//twitter.com/youtube"] img {
+[data-with-previeweet] .previeweet a[href="//twitter.com/youtube"] img,
+[data-with-previeweet] .previeweet a[href="//twitter.com/dribbble"] img,
+[data-with-previeweet] .previeweet a[href="//twitter.com/TwitPic"] img,
+[data-with-previeweet] .previeweet a[href="//twitter.com/meetup"] img {
 	-webkit-box-shadow: none;
 			box-shadow: none;
 
