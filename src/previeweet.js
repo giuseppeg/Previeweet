@@ -1,4 +1,4 @@
-// Copyright (c) 2012 Giuseppe Gurgone
+// Copyright (c) 2013 Giuseppe Gurgone
 
 // This work is licensed for reuse under the MIT license.
 // See the license file for details https://github.com/giuseppeg/Previeweet/blob/master/LICENSE
@@ -67,7 +67,6 @@
     });
 
     // Twitter's Phoenix Shim, customized.
-    // I also think that Twitter will kill this at some point. It is a Shim anyway :)
     define("previeweet/phx", ["module", "core/parameterize"], function (m, parameterize) {
 
         var mediaTypes = {},
@@ -935,6 +934,7 @@
                 username: "facebook",
                 deciderKey: "phoenix_facebook_details",
                 resolveTinyUrl: true,
+                withoutTwitterCard: true,
                 matchers: {
                     tinyUrl: /fb\.me\/([0-9a-zA-Z]+)/i,
                     app: /(fb|facebook)\.com\/([\d]+)\/?$/i,
@@ -1147,6 +1147,7 @@
                 matchers: {
                     photo: /imgur\.com\/([^\/|\.]+\/?)+/i
                 },
+                withoutTwitterCard: true,
                 getImageURL: function (callback) {
                     var that = this,
                         matcher = twttr.media.types.Imgur.matchers;
@@ -1255,6 +1256,51 @@
             }).statics({
                 template: "//d1au12fyca1yp1.cloudfront.net/{{id}}/{{id}}_{{size}}lt.jpg",
                 size: "me"
+            });
+
+            twttr.mediaType("Dribbble", {
+                title: "Dribbble",
+                domain: "http://dribbble.com",
+                icon: "http://dribbble.com/favicon.ico",
+                username: "dribbble",
+                resolveTinyUrl: true,
+                withoutTwitterCard: true,
+                matchers: {
+                    tinyUrl: /(drbl|drbbl).in\/[a-zA-Z0-9]+/i,
+                    shot: /dribbble.com\/shots\/(\d+)-.*/i
+                },
+                getImageURL: function (callback) {
+                    var that = this;
+
+                    this.process(function () {
+                        if (that.data && that.data.src) {
+                            callback(that.data.src);
+                        } else {
+                            callback(null);
+                        }
+                    });
+                },
+                process: function (callback) {
+                    var that = this;
+
+                    phx.sandboxedAjax.send({
+                        url: "http://api.dribbble.com/shots/" + this.slug,
+                        type: "GET",
+                        dataType: "jsonp",
+                        success: function (data) {
+                            if (data) {
+                                that.data.src = data.image_teaser_url;
+
+                                if (!that.data.src) {
+                                    that.data.src = data.image_url;
+                                }
+                            }
+
+                            callback();
+                        },
+                        error: callback
+                    });
+                }
             });
 
             exp(phx);
@@ -1467,6 +1513,14 @@
                                 .attr("data-with-previeweet", true)
                                 .find(this.selectors.container)
                                 .append($(previeweet).prepend(img));
+
+                            if (serviceInfo.withoutTwitterCard) {
+                                img.wrap($("<a/>", {
+                                        href: elem.attr("data-expanded-url"),
+                                        target: "_blank"
+                                    })
+                                );
+                            }
                         }
                     }
 
