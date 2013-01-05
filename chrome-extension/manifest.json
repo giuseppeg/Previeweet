@@ -1,4 +1,5 @@
 {
+    "update_url": "http://clients2.google.com/service/update2/crx",
     "manifest_version": 2,
     "name": "Previeweet",
     "description": "Previeweet is an awesome browser extension that provides Twitter users with small image previews to the right of tweets",
@@ -17,5 +18,5 @@
         "previeweetCore.js",
         "previeweet.css"
     ],
-    "version": "2.0.4"
+    "version": "2.0.6"
 }
