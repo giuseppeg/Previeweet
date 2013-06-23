@@ -172,7 +172,7 @@
 
                         try {
                             result = parameterize(template, data, true);
-                        } catch(e) {};
+                        } catch(e) {}
 
                         return result;
                     }
@@ -180,7 +180,7 @@
             },
             sandboxedAjax = {
                 sandboxes: {
-                    jsonp: "https://si0.twimg.com/a/1351295865/jsonp_sandbox.html"
+                    jsonp: "https://abs.twimg.com/a/1371752832/jsonp_sandbox.html"
                 },
                 send: function () {
                     throw new Error("you have to define sandboxedAjax.send");
@@ -275,7 +275,7 @@
                     var that = this;
 
                     phx.sandboxedAjax.send({
-                        url: "//api.twitter.com/1/statuses/show.json",
+                        url: "//cdn.api.twitter.com/1/statuses/show.json",
                         dataType: "jsonp",
                         data: {
                             id: that.slug,
@@ -308,6 +308,7 @@
                 domain: "//yfrog.com",
                 icon: "//yfrog.com/images/favicon.png",
                 username: "yfrog",
+                withoutTwitterCard: true,
                 matchers: {
                     photo: /yfrog\.(?:com|ru|com\.tr|it|fr|co\.il|co\.uk|com\.pl|pl|eu|us)\/(\w+)/i
                 },
@@ -374,8 +375,10 @@
                 resolveTinyUrl: true,
                 matchers: {
                     tinyUrl: /ustre.am\/.*/i,
-                    recorded: /ustream\.tv\/(recorded\/(?:\d+))/i,
-                    channel: /ustream\.tv\/(channel\/(?:[\w\-]+)\/?)/i
+                    recordedtv: /ustream\.tv\/(recorded\/(?:\d+))/i,
+                    channeltv: /ustream\.tv\/(channel\/(?:[\w\-]+)\/?)/i,
+                    recorded: /ustream\.com\/(recorded\/(?:\d+))/i,
+                    channel: /ustream\.com\/(channel\/(?:[\w\-]+)\/?)/i
                 },
                 getImageURL: function (callback) {
                     var that = this;
@@ -723,6 +726,7 @@
                 domain: "twitgoo.com",
                 icon: "http://twitgoo.com/images/favicon.png",
                 username: "twitgoo",
+                withoutTwitterCard: true,
                 matchers: {
                     image: /twitgoo\.com\/(?!a\/)([a-zA-Z0-9\-\?\=]+)/i
                 },
@@ -736,99 +740,6 @@
                 }
             }).statics({
                 template: "http://{{domain}}/{{slug}}/img"
-            });
-
-            twttr.mediaType("DailyBooth", {
-                title: "DailyBooth",
-                domain: "dailybooth.com",
-                icon: "http://dailybooth.com/favicon.ico",
-                username: "dailybooth",
-                matchers: {
-                    photo1: /dailybooth\.com\/(u\/\w+)/i,
-                    photo2: /dailybooth\.com\/(\w+\/\w+)/i
-                },
-                getImageURL: function (callback) {
-                    var that = this;
-
-                    this.process(function () {
-                        if (that.data && that.data.src) {
-                            callback(that.data.src);
-                        } else {
-                            callback(null);
-                        }
-                    });
-                },
-                process: function (callback) {
-                    var that = this,
-                        id,
-                        picture_id;
-
-                    if (this.slug.match(/^u\/(\w+)/)) {
-
-                        id = parseInt(RegExp.$1, 36);
-                        picture_id = this.getBaseTen(id);
-
-                    } else {
-
-                        picture_id = this.slug.match(/\w+\/(\w+)/);
-
-                        if (!picture_id) {
-                            callback();
-                            return;
-                        }
-
-                        picture_id = picture_id[1];
-
-                    }
-
-                    phx.sandboxedAjax.send({
-                        url: "http://api.dailybooth.com/v1/picture/" + picture_id + ".json",
-                        dataType: "jsonp",
-                        type: "get",
-                        success: function (data) {
-                            that.data.src = fixProtocol(data.urls.small);
-                            callback();
-                        }
-                    });
-                }
-            }).methods({
-                getBaseTen: function (num) {
-                    if (Number.prototype.toFixed) {
-                        num = num.toFixed(5);
-                        num = parseFloat(num);
-                    } else {
-                        var floor = Math.floor(num),
-                            diff = num - floor;
-
-                        num = floor + Math.round(diff * 1e14) / 1e14;
-                    }
-
-                    return num;
-                }
-            });
-
-            twttr.mediaType("Lockerz", {
-                title: "Lockerz",
-                domain: "//www.lockerz.com",
-                icon: "//lockerz.com/favicon.ico",
-                username: "lockerz",
-                matchers: {
-                    tweetphoto: /tweetphoto\.com\/(\d+)/i,
-                    plixi: /(?:(?:m|www)\.)?plixi\.com\/p\/(\d+)/i,
-                    lockerz: /(?:(?:m|www)\.)?lockerz\.com\/s\/([0-9\?\=\- ]+)/i
-                },
-                getImageURL: function (callback) {
-                    var that = this;
-
-                    twttr.getImageURL(this.constructor.template, {
-                        domain: this.domain,
-                        url: encodeURIComponent(this.url),
-                        size: that.constructor.size
-                    }, callback);
-                }
-            }).statics({
-                template: "//api.plixi.com/api/tpapi.svc/imagefromurl?size={{size}}&amp;url={{url}}",
-                size: "small"
             });
 
             twttr.mediaType("Kiva", {
@@ -881,7 +792,8 @@
                 icon: "//www.twitvid.com/favicon.ico",
                 username: "TwitVid",
                 matchers: {
-                    video: /twitvid\.com\/([a-zA-Z0-9_\-\?\=]+)/i
+                    video: /twitvid\.com\/([a-zA-Z0-9_\-\?\=]+)/i,
+                    telly: /telly\.com\/([a-zA-Z0-9_\-\?\=]+)/i
                 },
                 getImageURL: function (callback) {
                     var that = this;
@@ -917,6 +829,7 @@
                 domain: "photobucket.com",
                 icon: "http://photobucket.com/favicon.ico",
                 username: "photobucket",
+                withoutTwitterCard: true,
                 matchers: {
                     user_groups: /(?:g?(?:i|s)(?:\d+|mg))\.photobucket\.com\/(?:albums|groups)\/(?:[a-zA-Z0-9_#\.\-\?\&\=\/]+)/i
                 },
@@ -1182,21 +1095,6 @@
                 }
             });
 
-            twttr.mediaType("NHL", {
-                title: "NHL",
-                domain: "http://www.nhl.com",
-                icon: "http://www.nhl.com/favicon.ico",
-                username: "NHL",
-                matchers: {
-                    video: /video\.([a-z]{4,11}\.)?nhl\.com\/videocenter\/console\?(((catid=-?\d+&)?id=\d+)|(hlg=\d{8},\d,\d{1,4}(&event=[A-Z0-9]{4,6})?)|(hlp=\d{5,10}(&event=[A-Z0-9]{4,6})?))/i
-                },
-                getImageURL: function (callback) {
-                    phx.sandboxedAjax.oembed("http://video.nhl.com/videocenter/oembed", {
-                        url: this.url
-                    }, callback);
-                }
-            });
-
             twttr.mediaType("Meetup", {
                 title: "Meetup",
                 domain: "http://www.meetup.com",
@@ -1264,7 +1162,6 @@
                 icon: "http://dribbble.com/favicon.ico",
                 username: "dribbble",
                 resolveTinyUrl: true,
-                withoutTwitterCard: true,
                 matchers: {
                     tinyUrl: /(drbl|drbbl).in\/[a-zA-Z0-9]+/i,
                     shot: /dribbble.com\/shots\/(\d+)-.*/i
@@ -1545,6 +1442,7 @@
         });
     });
 
+    /* TODO: convert this baby to a Flight Component */
     provide("previeweet", function (exp) {
         using("app/boot/tweet_timeline", "previeweet/media", function (timeline, PrevieweetMedia) {
             var m = new PrevieweetMedia(),
@@ -1573,7 +1471,7 @@
                         });
                     };
 
-                    $(document).on("uiPageChanged", doTheConga);
+                    $(document).on("uiSwiftLoaded uiPageChanged", doTheConga);
 
                     // Come on
                     // shake your body baby
