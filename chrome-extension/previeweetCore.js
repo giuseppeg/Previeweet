@@ -1200,27 +1200,6 @@
                 }
             });
 
-            /*twttr.mediaType("laserturtle", {
-                title: "laserturtle",
-                domain: "http://www.laserturtle.com",
-                icon: "http://www.laserturtle.com/favicon.ico",
-                username: "laserfeed",
-                matchers: {
-                    photo: /laserturtle\.com\/([^\/]+)\/?/i
-                },
-                withoutTwitterCard: true,
-                getImageURL: function (callback) {
-                    var that = this;
-
-                    twttr.getImageURL(this.constructor.template, {
-                        domain: this.domain,
-                        id: this.slug
-                    }, callback);
-                }
-            }).statics({
-                template: "{{domain}}/_t/{{id}}.gif"
-            }); */
-
             exp(phx);
         });
 
