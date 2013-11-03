@@ -18,5 +18,6 @@
         "previeweetCore.js",
         "previeweet.css"
     ],
-    "version": "2.0.8"
+    "permissions": ["http://twitter.com/*", "https://twitter.com/*"],
+    "version": "3.0.0"
 }

@@ -1,1 +1,0 @@
-(function(){var h=document.getElementsByTagName('head')[0],script=document.createElement('script');script.src=chrome.extension.getURL('previeweetCore.js');h.appendChild(script);})()

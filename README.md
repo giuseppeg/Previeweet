@@ -3,7 +3,7 @@
 Previeweet is an awesome browser extension that provides Twitter users with small image previews to the right of tweets.
 
 <p align="center">
-  <img src="//raw.github.com/giuseppeg/Previeweet/master/screenshot.png" alt="" title="Cool eh?!">
+  <img src="screenshot.png" alt="" title="Cool eh?!">
 </p>
 <p align="center">
   Cool eh!?
