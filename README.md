@@ -1,6 +1,6 @@
 # Previeweet
 
-Previeweet is an awesome browser extension that provides Twitter users with small image previews to the right of tweets.
+Previeweet is an awesome browser extension that provides Twitter users with in stream image previews.
 
 <p align="center">
   <img src="screenshot.png" alt="" title="Cool eh?!">
