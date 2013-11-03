@@ -215,7 +215,9 @@ define(
                 this.on('uiHasInjectedTimelineItem', this.getPreview);
                 this.on('dataHasPrevieweet', this.createPreview);
                 this.on('uiPrevieweetCreatedFromUrl', this.injectPreview);
-                this.getPreviewsFromInitialState();
+                if (!this.attr.fromCache) {
+                    this.getPreviewsFromInitialState();
+                }
             });
         }
 
@@ -243,8 +245,10 @@ define(
                 noTeardown: true
             });
 
-            this.boot = function () {
-                Previeweet.attachTo(this.attr.timelineSelector);
+            this.boot = function (event, data) {
+                Previeweet.attachTo(this.attr.timelineSelector, {
+                    fromCache: data && data.fromCache
+                });
             };
 
             this.after('initialize', function () {

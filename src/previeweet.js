@@ -59,9 +59,10 @@
 	window.addEventListener('message', getPreview, false);
 
 	// inject the extension into the page
-	var input = document.createElement('input');
+	var target = document.getElementById('swift-module-path');
+	input = document.createElement('input');
 	input.value = chrome.extension.getURL('previeweetCore.js');
 	input.type = 'hidden';
 	input.className = 'swift-boot-module';
-	document.body.appendChild(input);
+	target.parentNode.insertBefore(input, target);
 }());
