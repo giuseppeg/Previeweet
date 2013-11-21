@@ -270,6 +270,9 @@ define(
     }
 );
 
+
 using('previeweet/boot', function (Boot) {
-    Boot.attachTo(document);
+    Boot.attachTo(document, {
+        noTeardown: true
+    });
 });

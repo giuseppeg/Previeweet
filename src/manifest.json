@@ -19,5 +19,5 @@
         "previeweet.css"
     ],
     "permissions": ["http://twitter.com/*", "https://twitter.com/*"],
-    "version": "3.0.1"
+    "version": "3.0.3"
 }
