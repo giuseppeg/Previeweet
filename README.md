@@ -9,6 +9,11 @@ Previeweet is an awesome browser extension that provides Twitter users with in s
   Cool eh!?
 </p>
 
+sup adding something random
+
+something else random
+
+tofoo
 
 ## HOWTO use it
 
